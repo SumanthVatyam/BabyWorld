@@ -14,9 +14,10 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
-public class DataRestConfig implements RepositoryRestConfigurer{
+public class DataRestConfig implements RepositoryRestConfigurer {
 
 	private EntityManager entityManager;
+
 	@Autowired
 	public DataRestConfig(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -26,17 +27,19 @@ public class DataRestConfig implements RepositoryRestConfigurer{
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 		exposeIds(config);
 	}
+
 	private void exposeIds(RepositoryRestConfiguration config) {
-		
+
 		Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 		List<Class> entityClasses = new ArrayList();
-		
-		for(EntityType entity:entities) {
+
+		for (EntityType entity : entities) {
 			entityClasses.add(entity.getJavaType());
 		}
-		
+
 		Class[] domainType = entityClasses.toArray(new Class[0]);
 		config.exposeIdsFor(domainType);
-		
+		// dghdrahb
+
 	}
 }
